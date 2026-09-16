@@ -60,7 +60,7 @@ public class Login {
             return false;
         }
         //pattern to check the international number format
-        String regex = "^\\+\\d{1,3}\\d{7,9}$";
+        String regex = "^\\+27\\d{1,9}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(cellPhoneNumber);
         
