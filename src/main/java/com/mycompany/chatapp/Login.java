@@ -87,7 +87,12 @@ public class Login {
         this.registeredPassword = password;
         this.registeredCellPhoneNumber = cellPhoneNumber;
 
-        return "Username successfully captured.Password successfully captured.Cell number successfully captured.";
+       //all three fields are valid, so report each success message and welcome the user
+        return """
+               Username successfully captured.
+               Password successfully captured.
+               Cell phone number successfully added.
+               Welcome """ + firstName + "," + lastName + " it is great to see you.";
     }
 
     //compare given details with saved credentials
