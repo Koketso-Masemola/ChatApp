@@ -65,7 +65,7 @@ public class Login {
         Matcher matcher = pattern.matcher(cellPhoneNumber);
         
         // Also enforce the total length requirement (no more than 10 digits excluding country code, or <= 13 total chars)
-        return matcher.matches() && cellPhoneNumber.length() <= 13;
+        return matcher.matches();
     }
 
     //tests all inputs and register if everything is valid
