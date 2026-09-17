@@ -1,6 +1,5 @@
-package com.mycompany.chatapplication;
+package com.mycompany.chatapp;
 
-import com.mycompany.chatapp.Login;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
