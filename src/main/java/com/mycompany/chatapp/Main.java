@@ -51,9 +51,107 @@ public class Main {
             boolean isAuthenticated = userLogin.loginUser(loginUsername, loginPassword);
             String loginMessage = userLogin.returnLoginStatus(isAuthenticated);
             
-            System.out.println( loginMessage);
+            System.out.println(loginMessage);
+
+            //messaging is only available after a successful login
+            if (isAuthenticated) {
+                runQuickChat(scanner);
+            }
         }
 
         scanner.close();
+    }
+
+    private static void runQuickChat(Scanner in) {
+        System.out.println("\nWelcome to QuickChat.");
+        int maxMessages = readInt(in, "How many messages do you wish to enter? ", 1, Integer.MAX_VALUE);
+        int entered = 0;
+
+        boolean running = true;
+        while (running) {
+            System.out.println("\n1) Send Messages");
+            System.out.println("2) Show recently sent messages");
+            System.out.println("3) Quit");
+            int choice = readInt(in, "Choose an option: ", 1, 3);
+
+            switch (choice) {
+                case 1:
+                    if (entered >= maxMessages) {
+                        System.out.println("You have reached your limit of " + maxMessages + " messages.");
+                        break;
+                    }
+                    processMessage(in);
+                    entered++;
+                    if (entered == maxMessages) {
+                        System.out.println("\nAll messages entered. Total messages sent: "
+                                + Message.returnTotalMessages());
+                    }
+                    break;
+                case 2:
+                    System.out.println("Coming Soon.");
+                    break;
+                default:
+                    System.out.println("\nTotal messages sent: " + Message.returnTotalMessages());
+                    System.out.println("Goodbye!");
+                    running = false;
+            }
+        }
+    }
+
+    private static void processMessage(Scanner in) {
+        String recipient;
+        while (true) {
+            System.out.print("Recipient cell number (e.g. +27718693002): ");
+            recipient = in.nextLine().trim();
+            String result = Message.checkRecipientCell(recipient);
+            System.out.println(result);
+            if (result.startsWith("Cell phone number successfully")) break;
+        }
+
+        String text;
+        while (true) {
+            System.out.print("Enter your message: ");
+            text = in.nextLine();
+            String result = Message.checkMessageLength(text);
+            if (result.equals("Message ready to send.")) {
+                System.out.println("Message sent");
+                break;
+            }
+            System.out.println("Please enter a message of less than 250 characters.");
+            System.out.println(result);
+        }
+
+        Message msg = new Message(recipient, text);
+        System.out.println(msg.messageIDGenerated());
+        System.out.println("Message Hash: " + msg.getMessageHash());
+
+        System.out.println("\n1) Send Message");
+        System.out.println("2) Disregard Message");
+        System.out.println("3) Store Message to send later");
+        int option = readInt(in, "Choose an option: ", 1, 3);
+        System.out.println(msg.sentMessage(option));
+
+        if (option == 1) {
+            System.out.println("\n" + msg.details());
+        } else if (option == 2) {
+            String key;
+            do {
+                System.out.print("> ");
+                key = in.nextLine().trim();
+            } while (!key.equals("0"));
+            System.out.println("Message deleted.");
+        }
+    }
+
+    private static int readInt(Scanner in, String prompt, int min, int max) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                int value = Integer.parseInt(in.nextLine().trim());
+                if (value >= min && value <= max) return value;
+            } catch (NumberFormatException ignored) { }
+            System.out.println("Please enter a number between " + min
+                    + (max == Integer.MAX_VALUE ? " and above." : " and " + max + "."));
+        }
     }
 }
