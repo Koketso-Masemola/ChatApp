@@ -1,0 +1,18 @@
+[
+  {
+    "messageID": "6632178640",
+    "messageNumber": "0",
+    "messageHash": "66:0:WHERETIME",
+    "sender": "Koketso Masemola",
+    "recipient": "+27718372487",
+    "message": "Where are you? You are late! I have asked you to be on time."
+  },
+  {
+    "messageID": "6249917678",
+    "messageNumber": "1",
+    "messageHash": "62:1:OKYOU",
+    "sender": "Koketso Masemola",
+    "recipient": "+27718372487",
+    "message": "Ok, I am leaving without you"
+  }
+]
